@@ -7,7 +7,7 @@
 
 SoftwareSerial ArduinoUNO(10, 11); //Rx, TX
 
-const int redLED = 4;
+const int redLED = 9;
 const int greenLED = 5;
 const int blueLED = 6;
 char c;

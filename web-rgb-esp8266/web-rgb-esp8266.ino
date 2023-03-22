@@ -9,9 +9,10 @@
 
 SoftwareSerial NodeMCU(5, 4); //RX, TX
 
-const char *ssid = "Wifi";
-const char *password = "";
+const char *ssid = "SHOPPO";
+const char *password = "244466666";
 String red = "", green = "", blue = "";
+int redVal, greenVal, blueVal;
 ESP8266WebServer webServer(80);
 
 String webpage = ""
@@ -86,19 +87,23 @@ void handleRoot() {
   green = webServer.arg(1);
   blue = webServer.arg(2);
 
+  redVal = (1023 - red.toInt()) / 4;
+  greenVal = (1023 - green.toInt()) / 4;
+  blueVal = (1023 - blue.toInt()) / 4;
+
   if((red != "") && (green != "") && (blue != "")) {
-    NodeMCU.print(red.toInt() / 4);     NodeMCU.print("R");
-    NodeMCU.print(green.toInt() / 4);   NodeMCU.print("G");
-    NodeMCU.print(blue.toInt() / 4);    NodeMCU.print("B");
+    NodeMCU.print(redVal);     NodeMCU.print("R");
+    NodeMCU.print(greenVal);   NodeMCU.print("G");
+    NodeMCU.print(blueVal);    NodeMCU.print("B");
     NodeMCU.println("\n");
   }
   
   Serial.print("Red: ");
-  Serial.println(red.toInt() / 4); 
+  Serial.println(redVal); 
   Serial.print("Green: ");
-  Serial.println(green.toInt() / 4); 
+  Serial.println(greenVal); 
   Serial.print("Blue: ");
-  Serial.println(blue.toInt() / 4); 
+  Serial.println(blueVal); 
   Serial.println();
   
   webServer.send(200, "text/html", webpage);
